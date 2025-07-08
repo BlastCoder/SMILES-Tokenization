@@ -1,0 +1,35 @@
+# bench_lengths.py
+from utils import iter_smiles
+from ape_tokenizer import APETokenizer
+import trie_funcs as tf
+import numpy as np, tqdm, time
+
+SLICE = "data/pubchem_1M.parquet"
+APE_DIR   = "ape_pubchem1M"
+TRIE_FILE = "trie_pubchem1M.pkl"
+
+def mean_len(generator, fn, desc):
+    tot = n = 0
+    for s in tqdm.tqdm(generator, desc=desc):
+        tot += fn(s); n += 1
+    return tot / n
+
+def main():
+    ape   = APETokenizer.from_pretrained(APE_DIR)
+    trie_state = tf.load_state(TRIE_FILE)
+
+    t0 = time.time()
+    ape_avg  = mean_len(iter_smiles(SLICE),
+                        lambda s: len(ape.encode(s)),
+                        "APE  ")
+    trie_avg = mean_len(iter_smiles(SLICE),
+                        lambda s: tf.compress_and_len(s, trie_state),
+                        "Trie ")
+
+    print(f"\nAPE  mean tokens : {ape_avg:5.2f}")
+    print(f"Trie mean tokens : {trie_avg:5.2f}")
+    print(f"Reduction        : {(ape_avg-trie_avg)/ape_avg*100:4.1f}%")
+    print(f"Total wall-time  : {time.time()-t0:.1f}s")
+
+if __name__ == "__main__":
+    main()

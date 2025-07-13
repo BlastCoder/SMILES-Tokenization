@@ -211,3 +211,7 @@ __marimo__/
 
 # MacOS
 .DS_Store
+
+# Nix
+shell.nix
+requirements-nix.txt

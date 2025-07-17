@@ -3,8 +3,8 @@ from utils import iter_smiles
 import trie_funcs as tf
 import time, os
 
-SLICE = "data/pubchem_1M.parquet"
-OUT   = "trie_pubchem1M.pkl"
+SLICE = "data/pubchem_100K.parquet"
+OUT   = "trie_pubchem100K.pkl"
 
 def main():
     print("Building trie compressor …")

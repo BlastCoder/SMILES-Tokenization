@@ -1,8 +1,10 @@
 # bench_lengths.py
 from utils import iter_smiles
 from ape_tokenizer import APETokenizer
+from SmilesPE.tokenizer import *
 import trie_funcs as tf
 import numpy as np
+import codecs
 import tqdm
 import time
 import matplotlib.pyplot as plt
@@ -31,8 +33,11 @@ def var_len(generator, fn, desc, mean):
 def main():
     ape = APETokenizer.from_pretrained(APE_DIR)
     trie_state = tf.load_state(TRIE_FILE)
+    spe_vocab = codecs.open("./spe_pubchem100K.txt")
+    spe = SPE_Tokenizer(spe_vocab)
 
     t0 = time.time()
+    
     ape_avg = mean_len(iter_smiles(SLICE),
                        lambda s: len(ape.encode(s)),
                        "APE  ")
@@ -47,12 +52,22 @@ def main():
                         lambda s: tf.compress_and_len(s, trie_state),
                         "Trie variance  ",
                         trie_avg)
+    spe_avg = mean_len(iter_smiles(SLICE),
+                       lambda s: len(spe.tokenize(s).split(" ")),
+                       "SPE  ")
+    spe_var = var_len(iter_smiles(SLICE),
+                      lambda s: len(spe.tokenize(s).split(" ")),
+                      "SPE variance  ",
+                      spe_avg)
 
     print(f"\nAPE mean tokens : {ape_avg:5.2f}")
     print(f"APE variance in tokens/mol : {ape_var:5.2f}")
     print(f"Trie mean tokens : {trie_avg:5.2f}")
     print(f"Trie variance in tokens/mol : {trie_var:5.2f}")
-    print(f"Reduction        : {(ape_avg-trie_avg)/ape_avg*100:4.1f}%")
+    print(f"SPE mean tokens : {spe_avg:5.2f}")
+    print(f"SPE variance in tokens/mol : {spe_var:5.2f}")
+    print(f"Reduction (APE vs Trie)        : {(ape_avg-trie_avg)/ape_avg*100:4.1f}%")
+    print(f"Reduction (SPE vs Trie)        : {(spe_avg-trie_avg)/spe_avg*100:4.1f}%")
     print(f"Total wall-time  : {time.time()-t0:.1f}s")
 
     total_saved = [0]

@@ -86,6 +86,7 @@ scipy==1.15.2
 seaborn==0.13.2
 selfies==2.2.0
 six==1.17.0
+smilespe==0.0.3
 stack-data==0.6.3
 sympy==1.13.1
 tensorboard==2.19.0

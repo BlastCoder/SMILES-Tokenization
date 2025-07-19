@@ -148,6 +148,12 @@ def save_state(state, fname):
 def load_state(fname):
     with open(fname, "rb") as f:
         return pickle.load(f)
+    
+def compress_and_return(s, state):
+    """
+    Return the list of tokens produced by the trie tokenizer.
+    """
+    return state.replace_root.tokenize(s)
 
 
 # ────────────────────────────────────────────────────────────────────────────────

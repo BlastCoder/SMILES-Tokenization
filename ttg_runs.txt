@@ -1,0 +1,144 @@
+Building TTG-guided trie compressor (K=8, FREQ_THR=2, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F2_H3p0.pkl  (23.5s)
+Trie metrics: 100000it [00:01, 99503.47it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F2_H3p0.pkl  (24.5s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=2, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F2_H3p5.pkl  (21.8s)
+Trie metrics: 100000it [00:00, 107142.33it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F2_H3p5.pkl  (22.7s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=2, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F2_H4p0.pkl  (19.9s)
+Trie metrics: 100000it [00:00, 109280.20it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F2_H4p0.pkl  (20.8s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=2, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F2_H4p5.pkl  (22.7s)
+Trie metrics: 100000it [00:00, 108702.97it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F2_H4p5.pkl  (23.7s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=3, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F3_H3p0.pkl  (21.8s)
+Trie metrics: 100000it [00:01, 93175.63it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F3_H3p0.pkl  (22.9s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=3, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F3_H3p5.pkl  (19.5s)
+Trie metrics: 100000it [00:00, 117674.20it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F3_H3p5.pkl  (20.3s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=3, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F3_H4p0.pkl  (16.6s)
+Trie metrics: 100000it [00:01, 90813.73it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F3_H4p0.pkl  (17.7s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=3, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F3_H4p5.pkl  (21.4s)
+Trie metrics: 100000it [00:00, 106490.69it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F3_H4p5.pkl  (22.4s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=4, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F4_H3p0.pkl  (16.4s)
+Trie metrics: 100000it [00:00, 105907.65it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F4_H3p0.pkl  (17.4s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=4, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F4_H3p5.pkl  (15.7s)
+Trie metrics: 100000it [00:00, 117681.40it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F4_H3p5.pkl  (16.5s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=4, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F4_H4p0.pkl  (18.0s)
+Trie metrics: 100000it [00:00, 117179.30it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F4_H4p0.pkl  (18.9s)
+Building TTG-guided trie compressor (K=8, FREQ_THR=4, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K8_F4_H4p5.pkl  (15.2s)
+Trie metrics: 100000it [00:00, 117136.36it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K8_F4_H4p5.pkl  (16.1s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=2, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F2_H3p0.pkl  (68.1s)
+Trie metrics: 100000it [00:01, 96673.73it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F2_H3p0.pkl  (69.1s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=2, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F2_H3p5.pkl  (70.7s)
+Trie metrics: 100000it [00:00, 100735.79it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F2_H3p5.pkl  (71.8s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=2, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F2_H4p0.pkl  (62.6s)
+Trie metrics: 100000it [00:00, 104907.25it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F2_H4p0.pkl  (63.6s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=2, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F2_H4p5.pkl  (63.2s)
+Trie metrics: 100000it [00:00, 105564.33it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F2_H4p5.pkl  (64.2s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=3, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F3_H3p0.pkl  (58.1s)
+Trie metrics: 100000it [00:01, 99483.38it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F3_H3p0.pkl  (59.1s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=3, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F3_H3p5.pkl  (59.4s)
+Trie metrics: 100000it [00:00, 106625.48it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F3_H3p5.pkl  (60.3s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=3, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F3_H4p0.pkl  (55.8s)
+Trie metrics: 100000it [00:00, 107391.17it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F3_H4p0.pkl  (56.8s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=3, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F3_H4p5.pkl  (58.0s)
+Trie metrics: 100000it [00:00, 106184.51it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F3_H4p5.pkl  (58.9s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=4, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F4_H3p0.pkl  (53.5s)
+Trie metrics: 100000it [00:01, 97086.62it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F4_H3p0.pkl  (54.5s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=4, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F4_H3p5.pkl  (52.4s)
+Trie metrics: 100000it [00:00, 107615.65it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F4_H3p5.pkl  (53.4s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=4, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F4_H4p0.pkl  (54.3s)
+Trie metrics: 100000it [00:00, 106285.82it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F4_H4p0.pkl  (55.3s)
+Building TTG-guided trie compressor (K=10, FREQ_THR=4, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K10_F4_H4p5.pkl  (54.5s)
+Trie metrics: 100000it [00:00, 106083.80it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K10_F4_H4p5.pkl  (55.4s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=2, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F2_H3p0.pkl  (139.0s)
+Trie metrics: 100000it [00:01, 90833.38it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F2_H3p0.pkl  (140.2s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=2, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F2_H3p5.pkl  (137.8s)
+Trie metrics: 100000it [00:01, 89456.16it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F2_H3p5.pkl  (139.0s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=2, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F2_H4p0.pkl  (138.4s)
+Trie metrics: 100000it [00:01, 95294.83it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F2_H4p0.pkl  (139.5s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=2, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F2_H4p5.pkl  (135.5s)
+Trie metrics: 100000it [00:01, 99577.01it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F2_H4p5.pkl  (136.5s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=3, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F3_H3p0.pkl  (131.2s)
+Trie metrics: 100000it [00:01, 91536.96it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F3_H3p0.pkl  (132.4s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=3, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F3_H3p5.pkl  (139.7s)
+Trie metrics: 100000it [00:01, 93216.10it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F3_H3p5.pkl  (140.8s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=3, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F3_H4p0.pkl  (139.1s)
+Trie metrics: 100000it [00:01, 95909.29it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F3_H4p0.pkl  (140.2s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=3, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F3_H4p5.pkl  (132.0s)
+Trie metrics: 100000it [00:01, 98457.29it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F3_H4p5.pkl  (133.0s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=4, ENTROPY_THR=3.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F4_H3p0.pkl  (126.6s)
+Trie metrics: 100000it [00:01, 94895.22it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F4_H3p0.pkl  (127.7s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=4, ENTROPY_THR=3.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F4_H3p5.pkl  (126.0s)
+Trie metrics: 100000it [00:00, 100694.39it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F4_H3p5.pkl  (127.0s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=4, ENTROPY_THR=4.0) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F4_H4p0.pkl  (127.7s)
+Trie metrics: 100000it [00:01, 99815.76it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F4_H4p0.pkl  (128.8s)
+Building TTG-guided trie compressor (K=12, FREQ_THR=4, ENTROPY_THR=4.5) …
+✔ Trie saved → ttg_vocab/ttg_pubchem100K_K12_F4_H4p5.pkl  (132.0s)
+Trie metrics: 100000it [00:01, 99318.18it/s]
+✔ Trie Metrics Computed → ttg_vocab/ttg_pubchem100K_K12_F4_H4p5.pkl  (133.0s)

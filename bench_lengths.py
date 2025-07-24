@@ -29,12 +29,21 @@ def var_len(generator, fn, desc, mean):
         n += 1
     return tot / n
 
+    
+def top_len(generator, fn, desc, n):
+    top = []
+    for s in tqdm.tqdm(generator, desc=desc):
+        top.append((fn(s), s))
+    top.sort(reverse=True, key=lambda x: x[0])
+    return top[:n]
+
 
 def main():
     ape = APETokenizer.from_pretrained(APE_DIR)
     trie_state = tf.load_state(TRIE_FILE)
     spe_vocab = codecs.open("./spe_pubchem100K.txt")
     spe = SPE_Tokenizer(spe_vocab)
+    top_n = 10
 
     t0 = time.time()
     
@@ -45,6 +54,10 @@ def main():
                        lambda s: len(ape.encode(s)),
                        "APE variance  ",
                        ape_avg)
+    ape_top = top_len(iter_smiles(SLICE),
+                       lambda s: len(ape.encode(s)),
+                       "APE top  ",
+                       top_n)
     trie_avg = mean_len(iter_smiles(SLICE),
                         lambda s: tf.compress_and_len(s, trie_state),
                         "Trie ")
@@ -52,6 +65,10 @@ def main():
                         lambda s: tf.compress_and_len(s, trie_state),
                         "Trie variance  ",
                         trie_avg)
+    trie_top = top_len(iter_smiles(SLICE),
+                        lambda s: tf.compress_and_len(s, trie_state),
+                        "Trie top  ",
+                        top_n)
     spe_avg = mean_len(iter_smiles(SLICE),
                        lambda s: len(spe.tokenize(s).split(" ")),
                        "SPE  ")
@@ -59,6 +76,10 @@ def main():
                       lambda s: len(spe.tokenize(s).split(" ")),
                       "SPE variance  ",
                       spe_avg)
+    spe_top = top_len(iter_smiles(SLICE),
+                       lambda s: len(spe.tokenize(s).split(" ")),
+                       "SPE top  ",
+                       top_n)
 
     print(f"\nAPE mean tokens : {ape_avg:5.2f}")
     print(f"APE variance in tokens/mol : {ape_var:5.2f}")
@@ -68,6 +89,19 @@ def main():
     print(f"SPE variance in tokens/mol : {spe_var:5.2f}")
     print(f"Reduction (APE vs Trie)        : {(ape_avg-trie_avg)/ape_avg*100:4.1f}%")
     print(f"Reduction (SPE vs Trie)        : {(spe_avg-trie_avg)/spe_avg*100:4.1f}%")
+
+    with open("data/ape_top.txt", "w") as f:
+        for smile in ape_top:
+            f.write(str(smile[0]) + ",\t" + smile[1] + "\n")
+
+    with open("data/trie_top.txt", "w") as f:
+        for smile in trie_top:
+            f.write(str(smile[0]) + ",\t" + smile[1] + "\n")
+
+    with open("data/spe_top.txt", "w") as f:
+        for smile in spe_top:
+            f.write(str(smile[0]) + ",\t" + smile[1] + "\n")
+
     print(f"Total wall-time  : {time.time()-t0:.1f}s")
 
     total_saved = [0]

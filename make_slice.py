@@ -1,8 +1,8 @@
 # make_slice.py
 import pyarrow.dataset as ds, pyarrow as pa, pyarrow.parquet as pq, os
 
-SRC_DIR = "data"                           # the 5-shard directory
-DST_FN  = "data/pubchem_100K.parquet"        # 100K-row slice to create
+SRC_DIR = "data/chembl"                           # the 5-shard directory
+DST_FN  = "data/chembl_train_100K.parquet"        # 100K-row slice to create
 
 def main():
     rows = []

@@ -110,3 +110,4 @@ yarl==1.18.3
 click==8.2.1 
 nltk==3.9.1 
 regex==2024.11.6
+scienceplots==2.1.1

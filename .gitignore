@@ -215,3 +215,4 @@ __marimo__/
 # Nix
 shell.nix
 requirements-nix.txt
+.vscode/settings.json

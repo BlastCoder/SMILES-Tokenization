@@ -1,6 +1,7 @@
 import re, pickle, collections, math
 from collections import defaultdict
 from typing import List, Tuple, Iterator
+from rdkit import Chem
 
 # ────────────────────────────────────────────────────────────────────────────────
 # 1. Basic SMILES tokenisation (Paper §3)
@@ -9,6 +10,14 @@ TOKEN_PATTERN = re.compile(r"(\[[^\[\]]+\]|Br?|Cl?|[A-Z][a-z]?|\d+|=|\/|\\|\+|\-
 def tokenize(smiles: str) -> List[str]:
     """Return list[str] tokens for a SMILES string."""
     return TOKEN_PATTERN.findall(smiles)
+
+def canonicalize_smiles(s: str) -> str | None:
+    """Return RDKit-canonicalized SMILES (or None if invalid)."""
+    mol = Chem.MolFromSmiles(s)
+    if mol is None:
+        return None
+    return Chem.MolToSmiles(mol, canonical=True)
+
 
 # ────────────────────────────────────────────────────────────────────────────────
 # 2. Counted‑trie node (Algorithms 3‑5)
@@ -108,7 +117,10 @@ def prepare_compressor(smiles_iter: Iterator[str], K: int = 8, freq_thr: int = 4
     seqs: List[List[str]] = []
     alphabet: set[str] = set()
     for s in smiles_iter:
-        toks = tokenize(s)
+        cano = canonicalize_smiles(s)
+        if cano is None:
+            continue  # skip invalid molecules
+        toks = tokenize(cano)
         seqs.append(toks)
         alphabet.update(toks)
 
@@ -194,7 +206,10 @@ def prepare_compressor_with_ttg(
     seqs: List[List[str]] = []
     alphabet: set[str] = set()
     for s in smiles_list:
-        toks = tokenize(s)
+        cano = canonicalize_smiles(s)
+        if cano is None:
+            continue
+        toks = tokenize(cano)
         seqs.append(toks)
         alphabet.update(toks)
 
@@ -215,7 +230,8 @@ def prepare_compressor_with_ttg(
 
     # pass 3 — build TTG and compute Ḣ(s)
     ttg = TokenTransitionGraph()
-    ttg.build_from_corpus(smiles_list)
+    canonical_smiles = [cano for s in smiles_list if (cano := canonicalize_smiles(s)) is not None]
+    ttg.build_from_corpus(canonical_smiles)
 
     filtered_patterns = [p for p in pattern_freq if ttg.average_path_entropy(p) <= entropy_thr]
     filtered_patterns.sort(key=lambda p: (len(p), pattern_freq[p]), reverse=True)

@@ -113,7 +113,7 @@ class _State(collections.namedtuple("_State", "token_to_idx idx_to_token replace
 # ────────────────────────────────────────────────────────────────────────────────
 # 5. Baseline compressor (Algorithms 3‑7)
 
-def prepare_compressor(smiles_iter: Iterator[str], K: int = 8, freq_thr: int = 4) -> _State:
+def prepare_compressor(smiles_iter: Iterator[str], K: int = 8, freq_thr: int = 4) -> (_State, dict):
     seqs: List[List[str]] = []
     alphabet: set[str] = set()
     for s in smiles_iter:
@@ -132,13 +132,15 @@ def prepare_compressor(smiles_iter: Iterator[str], K: int = 8, freq_thr: int = 4
     counted_root = build_trie(seqs, token_to_idx, K, sigma)
 
     replace_root = ReplaceTrie()
+    rev = {}
     rep_counter = 0
     for k in range(K, 1, -1):  # longest first
         for patt, freq in collect_freq(counted_root, k, idx_to_token, sigma, freq_thr):
             insert_replace(replace_root, patt, f"<R{rep_counter}>")
+            rev[f"<R{rep_counter}>"] = "".join(patt)
             rep_counter += 1
 
-    return _State(token_to_idx, idx_to_token, replace_root)
+    return (_State(token_to_idx, idx_to_token, replace_root), rev)
 
 # ────────────────────────────────────────────────────────────────────────────────
 # 6. Token Transition Graph 
@@ -197,7 +199,7 @@ def prepare_compressor_with_ttg(
     K: int = 8,
     freq_thr: int = 4,
     entropy_thr: float = 2.0,
-) -> _State:
+) -> (_State, dict):
 
     # materialise corpus (needed twice)
     smiles_list = list(smiles_iter)
@@ -237,12 +239,14 @@ def prepare_compressor_with_ttg(
     filtered_patterns.sort(key=lambda p: (len(p), pattern_freq[p]), reverse=True)
 
     replace_root = ReplaceTrie()
+    rev = {}
     rep_counter = 0
     for patt in filtered_patterns:
         insert_replace(replace_root, patt, f"<R{rep_counter}>")
+        rev[f"<r{rep_counter}>"] = "".join(patt)
         rep_counter += 1
 
-    return _State(token_to_idx, idx_to_token, replace_root)
+    return (_State(token_to_idx, idx_to_token, replace_root),rev)
 
 # ────────────────────────────────────────────────────────────────────────────────
 # 8. Misc helper utilities

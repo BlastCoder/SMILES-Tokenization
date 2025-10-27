@@ -1,4 +1,4 @@
-# E5. enumeration robustness
+# E5. enumeration robustness (order invariance control)
 from enum import EnumDict
 from ape_tokenizer import APETokenizer
 from collections import Counter

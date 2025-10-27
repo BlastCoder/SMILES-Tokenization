@@ -1,4 +1,4 @@
-# E5. enumeration robustness
+# E3. latent-space structure (syntactic neighborhood)
 from enum import EnumDict
 from ape_tokenizer import APETokenizer
 from collections import Counter

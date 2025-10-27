@@ -4,10 +4,10 @@ import time
 import re
 from utils import iter_smiles
 
-SLICE = "data/chembl_test.parquet"
-TRIE_FILE = "./trie_chembl.pkl"
-TRIE_TTG_FILE  = "./trie_ttg_chembl.pkl"
-TRIE_REV = "./trie_rev_chembl.pkl"
+SLICE = "data/pubchem_250K.parquet"
+TRIE_FILE = "./trie_pubchem.pkl"
+TRIE_TTG_FILE  = "./trie_ttg_pubchem.pkl"
+TRIE_REV = "./trie_rev_pubchem.pkl"
 
 flat = lambda lst: list((item for sublist in lst for item in sublist))
 TOKEN_PATTERN = re.compile(r"(\[[^\[\]]+\]|Br?|Cl?|[A-Z][a-z]?|\d+|=|\/|\\|\+|\-|\(|\)|@|\[|\])")
@@ -28,16 +28,17 @@ def bench_rev(orig, tokens, rev, trie_state):
         smile = ""
         for token in mol:
             if token.startswith("<R"): smile += rev[token]
-            elif TOKEN_PATTERN.match(token, pos=0, endpos=len(token)): smile += token
             elif token.isdigit() and int(token) in trie_state.idx_to_token.keys(): smile += trie_state.idx_to_token[int(token)]
+            elif TOKEN_PATTERN.match(token, pos=0, endpos=len(token)):
+                smile += token
         smiles.append(smile)
     t = time.time() - t0
 
     e = 0
     for mol in smiles:
-        if mol not in orig:
-            e+=1
-    
+        smile = tf.canonicalize_smiles(mol)
+        if smile and tf.canonicalize_smiles(mol) not in orig:
+            e+=1   
     return t, e
 
 def bench_avg(smiles, trie_state, rev_state):
@@ -61,7 +62,7 @@ def main():
     trie_rev_state  = tf.load_state(TRIE_REV)
     #trie_ttg_rev_state = tf.load_state(TRIE_TTG_REV)
 
-    smiles = list(iter_smiles(SLICE))[0:10000]
+    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:])))[:10000]
 
     trie, rev = bench_avg(smiles, trie_state, trie_rev_state)
     #ttg = bench_avg(smiles, trie_ttg_state)

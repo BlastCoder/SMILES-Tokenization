@@ -11,10 +11,13 @@ SLICE = "data/chembl_test.parquet"
 STATE = "trie_ttg_chembl.pkl"
 TRAIN = "data/chembl_train_100K.parquet"
 
+cap = 50000
+
 fpgen = AllChem.GetMorganGenerator(radius=2)
 
 def main():
-    mols = list(iter_smiles(TRAIN))[:5000]
+    mols = list(iter_smiles(SLICE))[:5000]
+    train = list(iter_smiles(TRAIN))
     state = tf.load_state(STATE)
     
     d = []
@@ -23,7 +26,7 @@ def main():
     ecfp = []
 
     ttg = tf.TokenTransitionGraph()
-    ttg.build_from_corpus(mols)
+    ttg.build_from_corpus(train)
     ttg._compute_transition_probs()
     
     for mol in mols:
@@ -40,13 +43,18 @@ def main():
         z.append([sum(i)/len(v) for i in zip(*v)])
         ecfp.append(fpgen.GetFingerprint(Chem.MolFromSmiles(mol)))
 
+    n = 0
+
     for i in range(len(z)):
+        if n >= cap: break
         for j in range(len(z)):
             if i >= j: continue
+            if n >= cap: break
             cos = sum(map(mul, z[i], z[j])) / (sum(map(lambda x: x**2, z[i]))**0.5 * sum(map(lambda x: x**2, z[j]))**0.5)
             tanimoto = DataStructs.TanimotoSimilarity(ecfp[i], ecfp[j])
 
             d.append((i,j,1-cos,1-tanimoto))
+            n+=1
 
     rank_ttg = sorted(d, key=lambda p: p[2])
     rank_ecfp = sorted(d, key=lambda p: p[3])

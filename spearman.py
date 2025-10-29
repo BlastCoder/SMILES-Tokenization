@@ -28,9 +28,16 @@ def main():
     
     for mol in mols:
         m = tf.tokenize(tf.canonicalize_smiles(mol))
-        v = list(map(lambda i: [ttg._transition_probs[i][x] for x in ttg._transition_probs[i].keys()], m))
-        z.append([sum(i)/len(v) for i in zip(*v)])
+        v = []
+        for tok in m:
+            if tok not in ttg._transition_probs.keys():
+                ttg._transition_probs[tok] = {}
+            for tok1 in m:
+                if tok1 not in ttg._transition_probs[tok].keys():
+                    ttg._transition_probs[tok][tok1] = 0
+            v.append([ttg._transition_probs[tok][x] for x in ttg._transition_probs[tok].keys()])
 
+        z.append([sum(i)/len(v) for i in zip(*v)])
         ecfp.append(fpgen.GetFingerprint(Chem.MolFromSmiles(mol)))
 
     for i in range(len(z)):
@@ -41,8 +48,8 @@ def main():
 
             d.append((i,j,1-cos,1-tanimoto))
 
-    rank_ttg = d.sort(key=lambda p: p[2])
-    rank_ecfp = d.sort(key=lambda p: p[3])
+    rank_ttg = sorted(d, key=lambda p: p[2])
+    rank_ecfp = sorted(d, key=lambda p: p[3])
 
     d2_i = []
 

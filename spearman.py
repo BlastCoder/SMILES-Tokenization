@@ -11,7 +11,7 @@ SLICE = "data/chembl_test.parquet"
 STATE = "trie_ttg_chembl.pkl"
 TRAIN = "data/chembl_train_100K.parquet"
 
-cap = 50000
+cap = 100000
 
 fpgen = AllChem.GetMorganGenerator(radius=2)
 

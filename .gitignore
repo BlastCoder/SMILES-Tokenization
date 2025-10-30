@@ -216,3 +216,5 @@ __marimo__/
 shell.nix
 requirements-nix.txt
 .vscode/settings.json
+data/peptide/peptides_100K.parquet
+data/peptide/peptides_10M.parquet

@@ -1,0 +1,22 @@
+== E7
+SPE mean tokens : 12.55
+SPE variance in tokens/mol : 47.24
+SPE entropy in bits :  7.70
+Trie+TTG mean tokens :  3.57
+Trie+TTG variance in tokens/mol :  3.50
+Trie+TTG entropy in bits : 16.81
+Compression Ratio - Trie 8.582825125599678
+Compression Ratio - SPE 2.4393953292394692
+
+== E1
+
+Encode
+=============
+Average: 0.20061659812927246s
+s/mol:   2.0061659812927246e-05s
+
+Decode
+==============
+Average: 0.03213659922281901s
+s/mol:   3.213659922281901e-06s
+s/tok:   9.010177257077694e-07s

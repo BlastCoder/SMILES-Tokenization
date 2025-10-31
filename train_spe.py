@@ -4,8 +4,8 @@ from SmilesPE.learner import *
 from utils import iter_smiles
 import time
 
-SLICE = "data/chembl_train_100K.parquet"
-OUT = 'spe_chembl.txt'
+SLICE = "data/peptide/peptides_100K.parquet"
+OUT = 'spe_peptide.txt'
 
 SMILES = list(iter_smiles(SLICE))
 print('Number of SMILES:', len(SMILES))

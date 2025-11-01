@@ -1,0 +1,3 @@
+[submodule "PeptideCLM"]
+	path = PeptideCLM
+	url = https://github.com/AaronFeller/PeptideCLM.git

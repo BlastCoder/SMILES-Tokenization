@@ -1,0 +1,12 @@
+SPE mean tokens                       12.55
+PeptideCLM mean tokens                14.55
+Trie+TTG mean tokens                  3.57
+SPE variance in tokens/mol            47.24
+PeptideCLM variance in tokens/mol     47.24
+Trie+TTG variance in tokens/mol       3.50
+SPE entropy in bits                   7.70
+PeptideCLM entropy in bits            3.41
+Trie+TTG entropy in bits              16.81
+Compression Ratio - SPE               2.4393953292394692
+Compression Ratio - PeptideCLM        2.4393953292394692
+Compression Ratio - Trie+TTG          8.582825125599678

@@ -3,11 +3,13 @@ import pyarrow.dataset as ds, pyarrow as pa, pyarrow.parquet as pq, os
 from SmilesPE.learner import *
 from utils import iter_smiles
 import time
+import pandas as pd
 
-SLICE = "data/peptide/peptides_100K.parquet"
 OUT = 'spe_peptide.txt'
 
-SMILES = list(iter_smiles(SLICE))
+data = pd.read_csv("./PeptideCLM/clustered_data/all_clusters.csv")
+SMILES = data[data['cluster'] != 1]['SMILES'].to_list()
+
 print('Number of SMILES:', len(SMILES))
 
 output = codecs.open(OUT, 'w')

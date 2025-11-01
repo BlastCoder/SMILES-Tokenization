@@ -15,6 +15,7 @@ TRIE_FILE = "./trie_ttg_peptide.pkl"  # 12.9s for training
 TRIE_TTG_FILE = "trie_ttg_peptide.pkl"  # 11.6s for training
 SPE_FILE = "spe_peptide.txt"  # 82.5s for training
 VOCAB_FILE = "PeptideCLM/tokenizer/new_vocab.txt"
+SPLITS_FILE = "PeptideCLM/tokenizer/new_splits.txt"
 
 def gen(mols, fn, desc):
     tot = n = tot_v = ent = 0
@@ -38,8 +39,7 @@ def gen(mols, fn, desc):
         
     return mean, var, ent
 
-def gen_pep(mols, tokenizer):
-    tokenized = tokenizer(mols)['input_ids']
+def gen_pep(mols, tokenized):
     n = len(mols)
     token_freq = Counter()
     tot = ent = tot_v = 0
@@ -64,9 +64,11 @@ def main():
     trie_ttg_state = tf.load_state(TRIE_TTG_FILE)
     spe_vocab = codecs.open(SPE_FILE)
     spe = SPE_Tokenizer(spe_vocab)
-    peptideclm = SMILES_SPE_Tokenizer(VOCAB_FILE, SPE_FILE)
+    peptideclm = SMILES_SPE_Tokenizer(VOCAB_FILE, SPLITS_FILE)
 
-    mols = list(iter_smiles(SLICE))
+    data = pd.read_csv("./PeptideCLM/clustered_data/all_clusters.csv")
+    mols = data[data['cluster'] == 1]['SMILES'].to_list()
+    tokenized = peptideclm(mols)['input_ids']
      
     trie_ttg_avg, trie_ttg_var, trie_ttg_entropy = gen(mols,
                                         lambda s: tf.compress_and_return(s, trie_ttg_state),
@@ -74,32 +76,32 @@ def main():
     spe_avg, spe_var, spe_entropy = gen(mols,
                                         lambda s: spe.tokenize(s).split(" "),
                                         "SPE")
-    pep_avg, pep_var, pep_entropy = gen_pep(mols, peptideclm)
+    pep_avg, pep_var, pep_entropy = gen_pep(mols, tokenized)
    
-    print(f"SPE mean tokens : {spe_avg:5.2f}")
-    print(f"SPE variance in tokens/mol : {spe_var:5.2f}")
-    print(f"SPE entropy in bits : {spe_entropy:5.2f}")
-    print(f"Trie+TTG mean tokens : {trie_ttg_avg:5.2f}")
-    print(f"Trie+TTG variance in tokens/mol : {trie_ttg_var:5.2f}")
-    print(f"Trie+TTG entropy in bits : {trie_ttg_entropy:5.2f}")
-    print(f"PeptideCLM mean tokens : {pep_avg:5.2f}")
-    print(f"PeptideCLM variance in tokens/mol: {pep_var:5.2f}")
-    print(f"PeptideCLM entropy in bits : {pep_entropy:5.2f}")
+    print(f"SPE mean tokens: {spe_avg}")
+    print(f"SPE variance in tokens/mol: {spe_var}")
+    print(f"SPE entropy in bits: {spe_entropy}")
+    print(f"Trie+TTG mean tokens: {trie_ttg_avg}")
+    print(f"Trie+TTG variance in tokens/mol: {trie_ttg_var}")
+    print(f"Trie+TTG entropy in bits: {trie_ttg_entropy}")
+    print(f"PeptideCLM mean tokens: {pep_avg}")
+    print(f"PeptideCLM variance in tokens/mol: {pep_var}")
+    print(f"PeptideCLM entropy in bits: {pep_entropy}")
 
     len_orig = 0
     len_trie = 0
     len_spe = 0
     len_pep = 0
     
-    for x in tqdm.tqdm(mols, desc="Compression Ratio"):
-        len_trie += tf.compress_and_len(x, trie_ttg_state)
-        len_spe += len(spe.tokenize(x).split(" "))
-        len_pep += len(peptideclm.spe_tokenizer.tokenize(x).split(" "))
-        len_orig += len(tf.tokenize(x))
+    for x in range(0,len(mols)):
+        len_trie += tf.compress_and_len(mols[x], trie_ttg_state)
+        len_spe += len(spe.tokenize(mols[x]).split(" "))
+        len_orig += len(tf.tokenize(mols[x]))
+        len_pep += len(tokenized[x])
         
-    print(f"Compression Ratio - Trie {len_orig/len_trie}")
-    print(f"Compression Ratio - SPE {len_orig/len_spe}")
-    print(f"Compression Ratio - Peptide CLM {len_orig/len_pep}")
+    print(f"Compression Ratio - Trie: {len_orig/len_trie}")
+    print(f"Compression Ratio - SPE: {len_orig/len_spe}")
+    print(f"Compression Ratio - Peptide CLM: {len_orig/len_pep}")
 
 if __name__ == "__main__":
     main()

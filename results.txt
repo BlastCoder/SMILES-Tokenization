@@ -1,12 +1,12 @@
-SPE mean tokens: 19.94501940491591
-SPE variance in tokens/mol: 18.128283731835314
-SPE entropy in bits: 4.575580040771007
-Trie+TTG mean tokens: 8.05627425614489
-Trie+TTG variance in tokens/mol: 1.005242004990571
-Trie+TTG entropy in bits: 7.032247045218001
-PeptideCLM mean tokens: 52.18175937904269
-PeptideCLM variance in tokens/mol: 38.235398198246536
-PeptideCLM entropy in bits: 3.8953272753891364
-Compression Ratio - Trie: 11.135367322360498
-Compression Ratio - SPE: 4.497843359818388
-Compression Ratio - Peptide CLM: 1.7191749408104322
+SPE mean tokens: 24.02099
+SPE variance in tokens/mol: 142.05462941989668
+SPE entropy in bits: 5.175929196363223
+Trie+TTG mean tokens: 9.85576
+Trie+TTG variance in tokens/mol: 27.468114822396863
+Trie+TTG entropy in bits: 8.475363713991582
+PeptideCLM mean tokens: 25.07946
+PeptideCLM variance in tokens/mol: 122.36168610834766
+PeptideCLM entropy in bits: 5.344999981885617
+Compression Ratio - Trie: 3.1027165840077275
+Compression Ratio - SPE: 1.2730378722941893
+Compression Ratio - Peptide CLM: 1.21930974590362

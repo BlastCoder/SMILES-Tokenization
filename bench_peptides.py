@@ -66,8 +66,8 @@ def main():
     spe = SPE_Tokenizer(spe_vocab)
     peptideclm = SMILES_SPE_Tokenizer(VOCAB_FILE, SPLITS_FILE)
 
-    data = pd.read_csv("./PeptideCLM/clustered_data/all_clusters.csv")
-    mols = data[data['cluster'] == 1]['SMILES'].to_list()
+    #data = pd.read_csv("./PeptideCLM/clustered_data/all_clusters.csv")
+    mols = list(iter_smiles(SLICE))[:100000]
     tokenized = peptideclm(mols)['input_ids']
      
     trie_ttg_avg, trie_ttg_var, trie_ttg_entropy = gen(mols,

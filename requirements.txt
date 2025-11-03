@@ -10,3 +10,4 @@ SmilesPE~=0.0.3
 tensorflow~=2.19.0
 torch~=2.7.1
 tqdm~=4.67.1
+networkx~=3.5

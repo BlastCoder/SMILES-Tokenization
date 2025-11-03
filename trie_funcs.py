@@ -1,4 +1,4 @@
-import re, pickle, collections, math
+import re, json, pickle, collections, math
 from collections import defaultdict
 from typing import List, Tuple, Iterator
 from rdkit import Chem
@@ -190,6 +190,18 @@ class TokenTransitionGraph:
         entropies = [self._token_entropies.get(tok, 0.0) for tok in pattern]
         return sum(entropies) / len(entropies)
 
+#  ────────────────────────────────────────────────────────────────────────────────       
+# helper function to save TTG probabilities
+def save_sparse_prob_matrix(ttg: TokenTransitionGraph, matrix_fname: str, keys_fname: str) -> None:
+    ttg._compute_transition_probs()
+
+    with open(matrix_fname, "wb") as f:
+        pickle.dump(ttg._transition_probs, f)
+
+    tokens = sorted(ttg._transition_probs.keys())
+    with open(keys_fname, "w") as f:
+        json.dump(tokens, f)
+
 # ────────────────────────────────────────────────────────────────────────────────
 # 7. Algorithm 8 — TTG‑guided refinement
 def prepare_compressor_with_ttg(
@@ -232,6 +244,7 @@ def prepare_compressor_with_ttg(
     ttg = TokenTransitionGraph()
     canonical_smiles = [cano for s in smiles_list if (cano := canonicalize_smiles(s)) is not None]
     ttg.build_from_corpus(canonical_smiles)
+    save_sparse_prob_matrix(ttg, "ttg/matrix.pkl", "ttg/keys.json")
 
     filtered_patterns = [p for p in pattern_freq if ttg.average_path_entropy(p) <= entropy_thr]
     filtered_patterns.sort(key=lambda p: (len(p), pattern_freq[p]), reverse=True)

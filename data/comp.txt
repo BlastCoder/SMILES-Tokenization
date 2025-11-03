@@ -1,0 +1,26 @@
+APE  : 388302it [00:13, 27873.35it/s]
+APE variance  : 388302it [00:14, 27400.54it/s]
+Trie : 388302it [00:04, 89597.07it/s] 
+Trie variance  : 388302it [00:04, 86755.99it/s]
+Trie-TTG : 388302it [00:05, 75870.98it/s]
+Trie-TTG variance  : 388302it [00:05, 74537.83it/s]
+SPE  : 388302it [00:54, 7067.46it/s]
+SPE variance  : 388302it [00:00, 418619.58it/s]
+
+APE mean tokens :  9.24
+APE variance in tokens/mol : 27.58
+APE entropy in bits : 11.32
+Trie mean tokens :  5.65
+Trie variance in tokens/mol : 17.20
+Trie entropy in bits : 14.69
+SPE mean tokens : 15.37
+SPE variance in tokens/mol : 97.32
+SPE entropy in bits :  7.93
+Trie+TTG mean tokens :  4.47
+Trie+TTG variance in tokens/mol :  9.18
+Trie+TTG entropy in bits : 16.25
+Reduction (APE vs Trie)        : 38.8%
+Reduction (SPE vs Trie)        : 63.2%
+Reduction (Trie+TTG vs Trie)   : 20.8%
+Total wall-time  : 129.1s
+APE vs Trie: 388302it [00:17, 21588.31it/s]

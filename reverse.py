@@ -8,6 +8,7 @@ SLICE = "data/pubchem_250K.parquet"
 TRIE_FILE = "./trie_pubchem.pkl"
 TRIE_TTG_FILE  = "./trie_ttg_pubchem.pkl"
 TRIE_REV = "./trie_rev_pubchem.pkl"
+TRIE_TTG_REV = "./trie_ttg_rev_pubchem.pkl"
 
 flat = lambda lst: list((item for sublist in lst for item in sublist))
 TOKEN_PATTERN = re.compile(r"(\[[^\[\]]+\]|Br?|Cl?|[A-Z][a-z]?|\d+|=|\/|\\|\+|\-|\(|\)|@|\[|\])")
@@ -30,6 +31,7 @@ def bench_rev(orig, tokens, rev, trie_state):
             if token.startswith("<R"): smile += rev[token]
             elif token.isdigit() and int(token) in trie_state.idx_to_token.keys(): smile += trie_state.idx_to_token[int(token)]
             elif TOKEN_PATTERN.match(token, pos=0, endpos=len(token)):
+                :w
                 smile += token
         smiles.append(smile)
     t = time.time() - t0
@@ -58,17 +60,18 @@ def bench_avg(smiles, trie_state, rev_state):
 
 def main():
     trie_state = tf.load_state(TRIE_FILE)
-    #trie_ttg_state  =  tf.load_state(TRIE_TTG_FILE)
+    trie_ttg_state  =  tf.load_state(TRIE_TTG_FILE)
     trie_rev_state  = tf.load_state(TRIE_REV)
-    #trie_ttg_rev_state = tf.load_state(TRIE_TTG_REV)
+    trie_ttg_rev_state = tf.load_state(TRIE_TTG_REV)
 
     smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:])))[:10000]
 
-    trie, rev = bench_avg(smiles, trie_state, trie_rev_state)
+    trie, rev = bench_avg(smiles, trie_ttg_state, trie_ttg_rev_state)
     #ttg = bench_avg(smiles, trie_ttg_state)
     print(f"TRIE\n=============\nAverage: {trie[0]}s\ns/mol:   {trie[1]}s\n")
     print(f"REV\n==============\nAverage: {rev[0]}s\ns/mol:   {rev[2]}s\ns/tok:   {rev[1]}s\nAvg. Error: {rev[3]}\n")
     #print(f"TTG\n=============\nAverage: {ttg[0]}s\ns/mol:   {ttg[1]}s")
+    #print(f"REV\n==============\nAverage: {ttg_rev[0]}s\ns/mol:   {ttg_rev[2]}s\ns/tok:   {ttg_rev[1]}s\nAvg. Error: {ttg_rev[3]}\n")
 
 if __name__ == "__main__":
     main()

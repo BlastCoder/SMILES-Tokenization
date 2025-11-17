@@ -31,7 +31,6 @@ def bench_rev(orig, tokens, rev, trie_state):
             if token.startswith("<R"): smile += rev[token]
             elif token.isdigit() and int(token) in trie_state.idx_to_token.keys(): smile += trie_state.idx_to_token[int(token)]
             elif TOKEN_PATTERN.match(token, pos=0, endpos=len(token)):
-                :w
                 smile += token
         smiles.append(smile)
     t = time.time() - t0

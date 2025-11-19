@@ -22,55 +22,59 @@ def bench(smiles, trie_state):
 
     return t, tries
 
-def bench_rev(orig, tokens, rev, trie_state):
+def dfs(find, root, prefix):
+    if root.replacement == find:
+        return prefix
+    else:
+        for child in root.children:
+            val = dfs(find, root.children[child], prefix + child)
+            if val:
+                return val
+        return False
+
+def bench_rev(orig, tokens, trie_state):
     t0 = time.time()
     smiles = []
     for mol in tokens:
         smile = ""
         for token in mol:
-            if token.startswith("<R"): smile += rev[token]
-            elif token.isdigit() and int(token) in trie_state.idx_to_token.keys(): smile += trie_state.idx_to_token[int(token)]
-            elif TOKEN_PATTERN.match(token, pos=0, endpos=len(token)):
-                smile += token
+            rep = dfs(token, trie_state.replace_root, "")
+            if rep: smile += rep
+            elif token.isdigit() and int(token) in trie_state.idx_to_token.keys():
+                smile += trie_state.idx_to_token[int(token)]
+            else: smile += token
         smiles.append(smile)
     t = time.time() - t0
 
-    e = 0
-    for mol in smiles:
-        smile = tf.canonicalize_smiles(mol)
-        if smile and tf.canonicalize_smiles(mol) not in orig:
-            e+=1   
-    return t, e
+    return t
 
-def bench_avg(smiles, trie_state, rev_state):
+def bench_avg(smiles, trie_state):
     t1, tok1 = bench(smiles, trie_state)
     t2, tok2 = bench(smiles, trie_state)
     t3, tok3 = bench(smiles, trie_state)
 
     ret1 = [(t1+t2+t3)/3, (t1+t2+t3)/(3*len(smiles))]
 
-    r1, e1 = bench_rev(smiles, tok1, rev_state, trie_state)
-    r2, e2 = bench_rev(smiles, tok1, rev_state, trie_state)
-    r3, e3 = bench_rev(smiles, tok1, rev_state, trie_state)
+    r1, e1 = bench_rev(smiles, tok1, trie_state)
+    r2, e2 = bench_rev(smiles, tok1, trie_state)
+    r3, e3 = bench_rev(smiles, tok1, trie_state)
 
-    ret2 = [(r1+r2+r3)/3, (r1+r2+r3)/(3*len(flat(tok1))), (r1+r2+r3)/(3*len(smiles)), (e1+e2+e3)/3]
+    ret2 = [(r1+r2+r3)/3, (r1+r2+r3)/(3*len(flat(tok1))), (r1+r2+r3)/(3*len(smiles))]
 
     return ret1, ret2
 
 def main():
     trie_state = tf.load_state(TRIE_FILE)
     trie_ttg_state  =  tf.load_state(TRIE_TTG_FILE)
-    trie_rev_state  = tf.load_state(TRIE_REV)
-    trie_ttg_rev_state = tf.load_state(TRIE_TTG_REV)
 
-    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:])))[:10000]
+    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:200000])))
 
-    trie, rev = bench_avg(smiles, trie_ttg_state, trie_ttg_rev_state)
-    #ttg = bench_avg(smiles, trie_ttg_state)
+    trie, rev = bench_avg(smiles, trie_ttg_state)
+    ttg, ttg_rev = bench_avg(smiles, trie_ttg_state)
     print(f"TRIE\n=============\nAverage: {trie[0]}s\ns/mol:   {trie[1]}s\n")
-    print(f"REV\n==============\nAverage: {rev[0]}s\ns/mol:   {rev[2]}s\ns/tok:   {rev[1]}s\nAvg. Error: {rev[3]}\n")
-    #print(f"TTG\n=============\nAverage: {ttg[0]}s\ns/mol:   {ttg[1]}s")
-    #print(f"REV\n==============\nAverage: {ttg_rev[0]}s\ns/mol:   {ttg_rev[2]}s\ns/tok:   {ttg_rev[1]}s\nAvg. Error: {ttg_rev[3]}\n")
+    print(f"REV\n==============\nAverage: {rev[0]}s\ns/mol:   {rev[2]}s\ns/tok:   {rev[1]}s\n")
+    print(f"TTG\n=============\nAverage: {ttg[0]}s\ns/mol:   {ttg[1]}s\n")
+    print(f"REV\n==============\nAverage: {ttg_rev[0]}s\ns/mol:   {ttg_rev[2]}s\ns/tok:   {ttg_rev[1]}s\n")
 
 if __name__ == "__main__":
     main()

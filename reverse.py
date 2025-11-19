@@ -50,16 +50,12 @@ def bench_rev(orig, tokens, trie_state):
 
 def bench_avg(smiles, trie_state):
     t1, tok1 = bench(smiles, trie_state)
-    t2, tok2 = bench(smiles, trie_state)
-    t3, tok3 = bench(smiles, trie_state)
-
-    ret1 = [(t1+t2+t3)/3, (t1+t2+t3)/(3*len(smiles))]
+    
+    ret1 = [t1, t1/len(smiles)]
 
     r1, e1 = bench_rev(smiles, tok1, trie_state)
-    r2, e2 = bench_rev(smiles, tok1, trie_state)
-    r3, e3 = bench_rev(smiles, tok1, trie_state)
 
-    ret2 = [(r1+r2+r3)/3, (r1+r2+r3)/(3*len(flat(tok1))), (r1+r2+r3)/(3*len(smiles))]
+    ret2 = [r1, r1/len(flat(tok1)), r1/len(smiles)]
 
     return ret1, ret2
 
@@ -67,7 +63,7 @@ def main():
     trie_state = tf.load_state(TRIE_FILE)
     trie_ttg_state  =  tf.load_state(TRIE_TTG_FILE)
 
-    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:200000])))
+    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:110000])))
 
     trie, rev = bench_avg(smiles, trie_ttg_state)
     ttg, ttg_rev = bench_avg(smiles, trie_ttg_state)

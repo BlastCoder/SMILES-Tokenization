@@ -7,8 +7,6 @@ from utils import iter_smiles
 SLICE = "data/pubchem_250K.parquet"
 TRIE_FILE = "./trie_pubchem.pkl"
 TRIE_TTG_FILE  = "./trie_ttg_pubchem.pkl"
-TRIE_REV = "./trie_rev_pubchem.pkl"
-TRIE_TTG_REV = "./trie_ttg_rev_pubchem.pkl"
 
 flat = lambda lst: list((item for sublist in lst for item in sublist))
 TOKEN_PATTERN = re.compile(r"(\[[^\[\]]+\]|Br?|Cl?|[A-Z][a-z]?|\d+|=|\/|\\|\+|\-|\(|\)|@|\[|\])")
@@ -53,7 +51,7 @@ def bench_avg(smiles, trie_state):
     
     ret1 = [t1, t1/len(smiles)]
 
-    r1, e1 = bench_rev(smiles, tok1, trie_state)
+    r1 = bench_rev(smiles, tok1, trie_state)
 
     ret2 = [r1, r1/len(flat(tok1)), r1/len(smiles)]
 

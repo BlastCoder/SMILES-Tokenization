@@ -63,7 +63,7 @@ def main():
 
     smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:110000])))
 
-    trie, rev = bench_avg(smiles, trie_ttg_state)
+    trie, rev = bench_avg(smiles, trie_state)
     ttg, ttg_rev = bench_avg(smiles, trie_ttg_state)
     print(f"TRIE\n=============\nAverage: {trie[0]}s\ns/mol:   {trie[1]}s\n")
     print(f"REV\n==============\nAverage: {rev[0]}s\ns/mol:   {rev[2]}s\ns/tok:   {rev[1]}s\n")

@@ -4,9 +4,9 @@ import time
 import re
 from utils import iter_smiles
 
-SLICE = "data/pubchem_250K.parquet"
-TRIE_FILE = "./trie_pubchem.pkl"
-TRIE_TTG_FILE  = "./trie_ttg_pubchem.pkl"
+SLICE = "data/chembl_test.parquet"
+TRIE_FILE = "./trie_chembl.pkl"
+TRIE_TTG_FILE  = "./trie_ttg_chembl.pkl"
 
 flat = lambda lst: list((item for sublist in lst for item in sublist))
 TOKEN_PATTERN = re.compile(r"(\[[^\[\]]+\]|Br?|Cl?|[A-Z][a-z]?|\d+|=|\/|\\|\+|\-|\(|\)|@|\[|\])")
@@ -61,7 +61,8 @@ def main():
     trie_state = tf.load_state(TRIE_FILE)
     trie_ttg_state  =  tf.load_state(TRIE_TTG_FILE)
 
-    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[100000:110000])))
+
+    smiles = list(filter(lambda a: a != None, map(tf.canonicalize_smiles, list(iter_smiles(SLICE))[:100000])))
 
     trie, rev = bench_avg(smiles, trie_state)
     ttg, ttg_rev = bench_avg(smiles, trie_ttg_state)

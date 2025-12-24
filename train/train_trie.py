@@ -3,7 +3,7 @@ from utils import iter_smiles
 import trie_funcs as tf
 import time, os
 
-SLICE = "data/pubchem_100k_canonical.parquet"
+SLICE = "../data/pubchem_100k_canonical.parquet"
 OUT   = "exp9_trie/trie.pkl"
 
 def main():

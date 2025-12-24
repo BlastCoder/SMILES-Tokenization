@@ -78,7 +78,7 @@ if __name__ == "__main__":
     )
 
     # 3. Save tokenizer
-    out_dir = "exp6/ape"
+    out_dir = "data/exp6/ape"
     os.makedirs(out_dir, exist_ok=True)
     ape.save_pretrained(out_dir)
     print(f"[INFO] APE tokenizer saved to: {out_dir}")

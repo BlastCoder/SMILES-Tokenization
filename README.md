@@ -21,6 +21,6 @@ The results will be visible in both the standard output of [`bench_lengths.py`](
 Various experiments were conducted during the review of this paper to test different properties about the generated encodings for each of the three tokenizers.
 The relevant code can be found in files labeled `test_e#.py`, replacing `#` with the experiment number.
 
-Remaining Python files are a mix of utilities, implementations of the underlying Trie/TTG algorithms, and other miscellaneous files for specific comparisons.
+Remaining Python files are a mix of utilities (see e.g. [`utils.py`](./utils.py)), implementations of the underlying compressor algorithms (see e.g. [`ape_tokenizer.py`](./ape_tokenizer.py), and [`trie_funcs.py`](./trie_funcs.py)), and other miscellaneous files for specific comparisons (see e.g. [`bench_trie_vs_ape.py`](./bench_trie_vs_ape.py)).
 
 Most output is directed into one of the top-level directories in this repository, usually [`data/`](./data/) or [`visualisations/`](./visualisations).
